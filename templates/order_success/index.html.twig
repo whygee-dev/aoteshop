@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Merci pour votre commande!{% endblock %}
+
+{% block _stylesheets %}
+    {{ encore_entry_link_tags('order') }}
+{% endblock %}
+
+{% block content %}
+<div class="success-order">
+    <h1>Merci pour votre commande!</h1>
+    <p>
+        <strong>{{ app.user.prenom}}</strong>, Nous vous remercions pour votre commande <strong> n°{{ order.reference }} </strong><br>
+
+        <hr>
+
+        Votre commande sera livrée par {{ order.nomTransporteur }} à l'adresse suivante: <br><br>
+        {{ order.adresseLivraison|raw }}
+
+        <hr>
+
+        Pour suivre votre commande, rendez-vous dans votre <a href="{{ path('account_order') }}">compte</a>
+    </p>
+
+</div>
+{% endblock %}

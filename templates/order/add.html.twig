@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block javascript %}
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+ {% block _stylesheets %}
+     {{ encore_entry_link_tags('order') }}
+ {% endblock %}
+
+{% block title %}Valider ma commande{% endblock %}
+
+{% block content %}
+    <h1>Récapitulatif commande</h1>
+
+    <div class="row recap">
+        <div class="col-md-6">
+            <strong>
+                Mon adresse de livraison
+            </strong>
+
+            <div class="form-check mt-4">
+                {{ delivry|raw }}
+            </div>
+            <br>
+            <hr>
+            <strong>Mon transporteur</strong>
+
+            <div class="form-check">
+                {{ carrier.nom }}
+                <br>
+                {{ carrier.description }}
+                <br>
+                {{ (carrier.prix / 100)|number_format(2, ',') }}€
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="text-center">
+                <b>Ma commande</b> <br>
+            </div>
+            <div class="order-summary">
+                {% set total = null %}
+                {% for key,item in cart %}
+                    <div class="row {% if key > 0  %}mt-2{% endif %}">
+                        <div class="col-4">
+                            <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.nom }}" height="75px"/>
+                        </div>
+
+                        <div class="col-6 my-auto">
+                            {{ item.product.nom }} <br>
+                            <small>{{ item.product.soustitre }}</small>
+                            <br>
+                            x {{ item.quantity }}
+                        </div>
+
+                        <div class="col-2 my-auto">
+                            <td>
+                                {{ (item.product.prix * item.quantity / 100)|number_format(2, ',') }}€
+                            </td>
+                        </div>
+                    </div>
+                    {% set total = total + (item.product.prix * item.quantity / 100) %}
+                {% endfor %}
+            </div>
+
+            <hr>
+
+            <strong>Sous total : {{ total|number_format(2, ',') }}€</strong> <br>
+            <strong>Livraison : {{ (carrier.prix / 100)|number_format(2, ',') }}€</strong>
+            <hr>
+            <strong>Total : {{ (carrier.prix/100 + total)|number_format(2, ',') }}€</strong>
+
+
+            <button type="submit" class="btn btn-success btn-block mt-3" id="checkout-button">
+                Payer | {{ ((carrier.prix/100 + total))|number_format(2, ',') }}€
+            </button>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const stripe = Stripe("pk_test_51KQgFiHJ4pNVljxgla6T3dm1GVte21aVPc1ldWv2DiNS06FEobzFpMYAYDv1fmJ2whD1aGuQUlj1b8gr99LOTpiq00Y8tN476J");
+        const checkoutButton = document.getElementById("checkout-button");
+
+        checkoutButton.addEventListener("click", function () {
+            fetch("/stripe/create-session/{{ reference }}", {
+                method: "POST",
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (session) {
+                    if (session.error) {
+                        window.location.replace('{{ path('order') }}');
+
+                        return;
+                    }
+
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                })
+                .then(function (result) {
+                    // If redirectToCheckout fails due to a browser or network
+                    // error, you should display the localized error message to your
+                    // customer using error.message.
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+{% endblock %}

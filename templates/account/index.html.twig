@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+
+{% block _stylesheets %}
+    {{ encore_entry_link_tags('account') }}
+{% endblock %}
+
+{% block content %}
+<h1>Mon compte</h1>
+    <hr>
+    <div class="row text-center">
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="col-md-4">
+            <div class="account-item">
+                <a href="/admin">Accéder au back office</a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-md-4">
+            <div class="account-item">
+                <a href="{{ path('account_profil') }}">Gérer mes informations</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="account-item">
+                <a href="{{ path('account_address') }}">Gérer mes adresses</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="account-item">
+                <a href="{{ path('account_order') }}">Mes commandes</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+ {% block _stylesheets %}
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     {{ encore_entry_link_tags('cart') }}
+ {% endblock %}
+
+{% block content %}
+<div>
+    {% if cart %}
+        <h1>Mon panier</h1>
+
+        <div class="container-lg">
+            <table class="table mt-4">
+                <thead>
+                <tr>
+                    <th scope="col">Produit</th>
+                    <th scope="col"></th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Total</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% set total = null %}
+                {% for item in cart %}
+                    <tr>
+                        <th scope="row">
+                            {{ item.product.nom }} <br>
+                            <small>{{ item.product.soustitre }}</small>
+                        </th>
+                        <td>
+                            <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.nom }}" height="50px"/>
+                        </td>
+                        <td>
+                            <a href="{{ path('decrease_from_cart', {id: item.product.id}) }}" class="mx-2">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            {{ item.quantity }}
+                            <a href="{{ path('add_to_cart', {id: item.product.id}) }}" class="mx-2">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </td>
+                        <td>{{ (item.product.prix / 100)|number_format(2, ',') }}€</td>
+                        <td>
+                            {{ (item.product.prix * item.quantity / 100)|number_format(2, ',') }}€
+                        </td>
+                        <td>
+                            <a href="{{ path('remove_from_cart', {id: item.product.id}) }}">
+                                <img src="/assets/image/remove.png" alt="supprimer" width="24px">
+                            </a>
+                        </td>
+                    </tr>
+                    {% set total = total + (item.product.prix * item.quantity / 100) %}
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-right">
+                <b>Nombre de produits: <span>{{ cart|length }}</span> </b>
+                <br>
+                <b>Total de mon panier: <span>{{ total|number_format(2, ',') }}€</span> </b>
+                <br>
+
+                <div class="buttons">
+                    <a href="{{ path('order') }}" class="btn btn-success btn-block mt-3 mx-3">Valider mon panier</a>
+                    <a href="{{ path('remove_cart') }}" class="btn btn-danger btn-block mt-3 mx-3">Supprimer mon panier</a>
+                </div>
+
+                <i class="far fa-trash-alt "></i>
+            </div>
+        </div>
+
+
+    {% else %}
+        <div class="empty-cart">
+            <h1>Votre panier est plus vide que les yeux d'Eren :(</h1>
+            <img src="/assets/image/eren-empty-eyes.webp" alt="Eren empty eyes">
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

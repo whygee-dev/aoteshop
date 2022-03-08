@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur de paiement{% endblock %}
+
+ {% block _stylesheets %}
+     {{ encore_entry_link_tags('order') }}
+ {% endblock %}
+
+{% block content %}
+    <div class="canceled-order">
+        <h1>Erreur de paiement</h1>
+        <p>
+            <strong>{{ app.user.prenom}}</strong>, Il semblerai que votre paiement a échoué pour votre commande <strong> n°{{ order.reference }} </strong><br>
+        </p>
+
+        <a href="{{ path('order') }}" class="btn btn-info">Réessayer le paiement</a>
+    </div>
+{% endblock %}

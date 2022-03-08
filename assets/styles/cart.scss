@@ -1,0 +1,62 @@
+h1 {
+  margin-bottom: 55px;
+}
+
+.btn-success {
+  background-color: black !important;
+
+  border: none!important;
+  box-shadow: none!important;
+
+  &:hover {
+    background-color: darkgreen!important;
+  }
+}
+
+.btn-danger {
+  background-color: black !important;
+  border: none!important;
+  box-shadow: none!important;
+
+  &:hover {
+    background-color: darken( #9d0707, 5%)!important;
+  }
+}
+
+table {
+  background-color: black;
+
+  * {
+    color: white;
+  }
+
+  th, td {
+    vertical-align: middle;
+  }
+}
+
+b {
+  color: black;
+  font-weight: bold;
+}
+
+b span {
+  font-weight: bolder;
+}
+
+.buttons {
+  display: flex;
+  margin: auto;
+  width: clamp(320px, 33%, 500px);
+}
+
+.empty-cart {
+  h2 {
+    text-align: center;
+  }
+
+  img {
+    display: block;
+    margin: auto;
+  }
+}

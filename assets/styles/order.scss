@@ -1,0 +1,77 @@
+h1 {
+  margin-bottom: 55px;
+  color: black;
+}
+
+.order-summary {
+  border-radius: 8px;
+  background-color: black;
+  padding: 30px 20px;
+  margin-top: 22px;
+
+  > div {
+    margin-bottom: 35px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    * {
+      color: white;
+    }
+  }
+}
+
+b {
+  color: black;
+
+  ~ p {
+    color: black;
+  }
+}
+
+@media (max-width: 700px) {
+  .scdCol {
+    margin-top: 20px;
+  }
+}
+
+.recap {
+  .btn-success {
+    background-color: black !important;
+
+    border: none !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background-color: darkgreen !important;
+    }
+  }
+
+  strong {
+    color: black;
+  }
+}
+
+.success-order {
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+
+  padding: 10px 0;
+
+  h1 {
+    color: white!important;
+  }
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  text-align: center;
+}
+
+.canceled-order {
+
+}

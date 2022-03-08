@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.nom }}{% endblock %}
+
+{% block content %}
+
+    <div class="product-container row">
+        <div href="{{ path('product', {'slug' : product.slug}) }}" class="col-md-5">
+            <img src="/uploads/{{ product.illustration }}" alt="{{ product.nom }}" class="img-fluid"/>
+        </div>
+
+        <style>
+            img {
+                margin: auto;
+                display: block;
+            }
+
+            span {
+                font-weight: bold;
+                color: black;
+                font-size: 20px;
+            }
+
+            p, p ~ div {
+                font-size: 22px!important;
+                color: black;
+            }
+        </style>
+
+        <div href="{{ path('product', {'slug' : product.slug}) }}" class="col-md-7 my-auto">
+            <h1 class="font-weight-normal text-left mb-3">{{ product.nom }}</h1>
+            <h2 class="font-weight-light h4">{{ product.soustitre }}</h2>
+            <span> {{ (product.prix / 100)|number_format(2, ',') }}€</span>
+            <p>
+                {{ product.description|raw }}
+            </p>
+
+            <a href="{{ path('add_to_cart', {'id' : product.id}) }}" class="btn btn-primary"> Ajouter au panier</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2 class="text-center h1 mt-4 mb-5">Nos meilleurs ventes</h2>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-5">
+                {% include 'product/single_product.html.twig' %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte - Profil{% endblock %}
+
+{% block _stylesheets %}
+    {{ encore_entry_link_tags('account') }}
+{% endblock %}
+
+{% block content %}
+    <h1>Modifier mes informations</h1>
+    <a href="{{ path('account') }}">Retourner à mon compte</a>
+
+
+    {% if notificationError %}
+        <div class="alert alert-danger">{{ notificationError }}</div>
+    {% endif %}
+
+    {% if notificationSuccess %}
+        <div class="alert alert-success">{{ notificationSuccess }}</div>
+    {% endif %}
+
+    {{ form(form) }}
+{% endblock %}

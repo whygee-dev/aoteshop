@@ -1,0 +1,74 @@
+.account-item {
+  background-color: black;
+  padding: 70px;
+  box-sizing: border-box;
+  margin: 10px 0;
+
+
+  a {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: white;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+main {
+  a {
+    color: black;
+    font-weight: bold;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+.addresses {
+  display: flex;
+  justify-content: space-around;
+
+  .card {
+    width: fit-content;
+  }
+
+  .card-body {
+    background-color: black;
+    color: white;
+
+    a {
+      color: white;
+      display: inline;
+    }
+  }
+
+  a {
+    display: block;
+    margin: auto;
+  }
+}
+
+.commandes {
+  table {
+    background-color: black;
+    color: white;
+
+    a {
+      color: white;
+    }
+  }
+}
+
+.commande {
+  table {
+    background-color: black;
+    color: white;
+  }
+
+  strong {
+    color: black;
+  }
+}
