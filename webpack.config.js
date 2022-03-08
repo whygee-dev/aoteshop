@@ -11,16 +11,12 @@ Encore
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/build')
-    // only needed for CDN's or sub-directory deploy
-    //.setManifestKeyPrefix('build/')
-
-    /*
-     * ENTRY CONFIG
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
-     */
+    .enableSassLoader()
     .addEntry('app', './assets/app.js')
+    .addEntry('cart', './assets/cart.js')
+    .addEntry('home', "./assets/home.js")
+    .addEntry('order', './assets/order.js')
+    .addEntry('account', './assets/account.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

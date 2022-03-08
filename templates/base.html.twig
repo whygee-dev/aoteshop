@@ -1,19 +1,121 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title> {% block title %}Attack on Titan - Shop{% endblock %}</title>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block _stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+    {% block javascript %}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico">
+    <link href="/assets/css/carousel.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path('home') }}">AOT Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('products') }}">Nos produits</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                </li>
+            </ul>
+            <a href="{{ path('cart') }}">
+                <img src="/assets/image/panier.png" alt="panier" width="24px" class="mr-3"/>
+            </a>
+
+            <div class="navbar-item-custom">
+                {% if app.user %}
+                    <a href="{{ path('account') }}">Mon Compte <small>({{ app.user.prenom }})</small></a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Connexion</a> | <a href="{{ path('register') }}">Inscription</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    {% if block('carousel') is defined %}
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for key,header in headers %}
+            <li data-target="#myCarousel" data-slide-to="{{ key }}" {%  if key == 0 %}class="active" {% endif %}></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for key,header in headers %}
+            <div class="carousel-item {% if key==0 %}active{% endif %}" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/uploads/{{ header.illustration }}'); background-repeat: no-repeat; background-size: cover">
+                <div class="container">
+                    <div class="carousel-caption text-left">
+                        <h1>{{ header.titre }}</h1>
+                        <p>{{ header.description|raw }}</p>
+                        <p><a class="btn btn-lg btn-info" href="{{ header.buttonUrl }}" role="button">{{ header.buttonTitre }}</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Suivant</span>
+        </a>
+    </div>
+
+    {% endif %}
+
+
+    <div class="container-fluid marketing {% if block('carousel') is not defined %}mt-5{% endif %}" style="min-height: 80.2vh;">
+        {% block content %}
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    </div>
+
+    <footer class="footer-custom">
+        <p>&copy; 2022 Attack On Titan Shop &middot; Crafted with &hearts; by <a href="https://github.com/whygee-dev">Yahya Jirari</a> </p>
+    </footer>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.js"></script>
+{% block script %}
+{% endblock %}
+</body>
 </html>
