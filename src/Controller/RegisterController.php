@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Outils\Mailer;
 use Doctrine\Persistence\ManagerRegistry;
 use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,10 @@ class RegisterController extends AbstractController
 
             $doctrine->persist($user);
             $doctrine->flush();
+
+            $mailer = new Mailer();
+            $mailer->send($user->getEmail(), $user->getFullName(), "Bienvenue à AOT ESHOP", "Confirmation d'inscription",
+                "Bonjour ".$user->getFullName().",<br/> <br/>Votre compte a bien été créé, rendez-vous sur votre espace membre pour gérer vos informations et passer commande.");
 
             return $this->redirectToRoute('app_login');
         }

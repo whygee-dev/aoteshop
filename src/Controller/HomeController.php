@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Header;
 use App\Entity\Product;
+use App\Outils\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

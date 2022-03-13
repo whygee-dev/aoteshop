@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Outils\Cart;
+use App\Outils\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +25,13 @@ class OrderSuccessController extends AbstractController
             $order->setPaye(true);
             $em->flush();
             $cart->remove();
+
+            $mailer = new Mailer();
+            $mailer->send($order->getUser()->getEmail(), $order->getUser()->getFullName(), "AOT ESHOP - Merci pour votre commande", "Confirmation de la commande n°" . $order->getReference(),
+                "Bonjour ".$order->getUser()->getFullName().",<br/> <br/>Votre commande a bien été prise en compte, rendez-vous sur votre espace membre pour suivre le statut de votre commande.");
+
         } else {
-            //return $this->redirectToRoute('account');
+            return $this->redirectToRoute('account');
         }
 
 

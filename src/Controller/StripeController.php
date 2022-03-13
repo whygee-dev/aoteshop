@@ -18,7 +18,7 @@ class StripeController extends AbstractController
     #[Route('/stripe/create-session/{reference}', name: 'stripe_create_session')]
     public function index($reference, Cart $cart, EntityManagerInterface $em): Response
     {
-        $YOUR_DOMAIN = $_ENV["APP_ENV"] === "dev" ? "http://localhost:8000" : "http://radiant-fortress-23554.herokuapp.com";
+        $YOUR_DOMAIN = $_ENV["URL"];
         $productsForStripe = [];
 
         $order = $em->getRepository(Order::class)->findOneByReference($reference);
