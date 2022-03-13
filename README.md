@@ -12,7 +12,12 @@ npm install
 ```
 
 2. Configure your .env with the correct database and mailer credentials
-3. Launch Symfony and webpack server (seperate terminals)
+3. Create the database and run migrations using doctrine
+```
+symfony console doctrine:database:create
+symfony console doctrine:migrations:migrate
+```
+4. Launch Symfony and webpack server (seperate terminals)
 
 ```
 symfony serve -D
