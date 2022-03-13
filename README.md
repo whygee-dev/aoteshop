@@ -1,6 +1,7 @@
 # AOT ESHOP
 
-An ecommerce web app made for school using Symfony 6 featuring basic usual functionalities
+An ecommerce web app made for school using Symfony 6 featuring basic usual user functionalities
+and a backoffice for administration.
 
 ## Installation
 
